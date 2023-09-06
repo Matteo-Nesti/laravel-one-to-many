@@ -22,6 +22,8 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::orderBy('updated_at', 'DESC')->get();
+
+
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -44,6 +46,7 @@ class ProjectController extends Controller
             'title' => 'required|max:50|string|unique:projects',
             'content' => 'required|string',
             'image' => 'nullable',
+            'type_id' => 'nullable|exists:types,id',
         ], [
             'title.required' => 'Title is required',
             'title.max' => 'Title max length is 50',
@@ -52,6 +55,7 @@ class ProjectController extends Controller
             'content.required' => 'Description is required',
 
             'image.url' => 'Url is not valid',
+            'type_id.exists' => 'id alredy exist',
         ]);
         $data = $request->all();
 
@@ -97,12 +101,14 @@ class ProjectController extends Controller
             'title' => ['required', 'max:50', 'string', Rule::unique('projects')->ignore($project->id)],
             'content' => 'required|string',
             'image' => 'nullable',
+            'type_id' => 'nullable|exists:types,id',
         ], [
             'title.required' => 'Title is required',
             'title.max' => 'Title max length is 50',
             'title.unique' => 'the title already exists',
 
             'content.required' => 'Description is required',
+            'type_id.exists' => 'id alredy exist',
         ]);
 
         $data = $request->all();

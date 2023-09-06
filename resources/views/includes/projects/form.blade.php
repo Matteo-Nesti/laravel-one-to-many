@@ -25,8 +25,21 @@
     <input type="text" class="form-control" id="slug" aria-describedby="emailHelp" name="slug"
         value="{{ old('slug', $project->slug) }}" disabled>
 </div>
+
+{{-- select type --}}
+<div class="mb-3 col-5">
+    <label for="type" class="form-label">Type</label>
+    <select class="form-select" name="type_id" id="type">
+        <option selected>Any</option>
+        @foreach ($types as $type)
+            <option @if (old('type_id', $project->type_id) == $type->id) selected @endif value="{{ $type->id }}">
+                {{ $type->label }}
+            </option>
+        @endforeach
+    </select>
+</div>
 {{-- img prev --}}
-<div class="mb-3 col-10">
+<div class="mb-3 col-5">
     <label for="thumb-field" class="form-label">Thumb</label>
     <input type="file" class="form-control @error('image') is-invalid @enderror" id="thumb-field"
         aria-describedby="emailHelp" name="image" value="{{ old('image', $project->image) }}">

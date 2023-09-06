@@ -21,6 +21,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Project-Title</th>
                 <th scope="col">Created at</th>
+                <th scope="col">Type</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -30,6 +31,12 @@
                     <th scope="row">{{ $project->id }}</th>
                     <td>{{ $project->title }}</td>
                     <td>{{ $project->created_at }}</td>
+                    @if ($project->type)
+                        <td>{{ $project->type->label }}</td>
+                    @else
+                        <td>-</td>
+                    @endif
+
                     <td>
                         <div class="d-flex">
                             <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-primary">
